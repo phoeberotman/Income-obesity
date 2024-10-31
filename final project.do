@@ -1,6 +1,5 @@
-log using "/Users/kaleighkrause/Desktop/PBPL10/Log Files/groupproject.log", replace
-
-use "/Users/kaleighkrause/Desktop/PBPL10/Data/statehealth23_foodinsecurity.dta"
+use "/Users/phoeberotman/Desktop/statehealth2023.dta"
+log using "/Users/phoeberotman/Desktop/statehealth2023extract.log", replace
 
 tab1 food_insecure
 tabstat food_insecure obeseadults2 mincome, s(mean, med, sd, range)
@@ -69,8 +68,6 @@ graph twoway (lfit mincome food_insecure) (scatter mincome food_insecure)
 
 regress obeseadults2 hhinc2
 regress obeseadults2 hhinc2 food_insecure
-
-
 
 log off
 log close
