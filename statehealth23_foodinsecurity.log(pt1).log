@@ -1,0 +1,343 @@
+---------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/phoeberotman/Desktop/statehealth23_foodinsecurity.log
+  log type:  text
+ opened on:  31 Oct 2024, 23:20:47
+
+. 
+. tab1 food_insecure
+
+-> tabulation of food_insecure  
+
+    Percent |
+  with food |
+ insecurity |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        5.5 |          1        1.96        1.96
+        6.8 |          2        3.92        5.88
+        7.2 |          1        1.96        7.84
+        7.5 |          1        1.96        9.80
+        8.1 |          3        5.88       15.69
+        8.2 |          1        1.96       17.65
+        8.5 |          1        1.96       19.61
+        8.8 |          1        1.96       21.57
+        8.9 |          2        3.92       25.49
+        9.2 |          1        1.96       27.45
+        9.3 |          1        1.96       29.41
+        9.4 |          1        1.96       31.37
+        9.5 |          2        3.92       35.29
+        9.7 |          1        1.96       37.25
+        9.9 |          3        5.88       43.14
+         10 |          1        1.96       45.10
+       10.3 |          2        3.92       49.02
+       10.5 |          4        7.84       56.86
+       10.6 |          2        3.92       60.78
+       10.7 |          3        5.88       66.67
+       11.4 |          1        1.96       68.63
+       11.5 |          1        1.96       70.59
+       11.6 |          1        1.96       72.55
+       11.7 |          2        3.92       76.47
+       11.8 |          2        3.92       80.39
+       11.9 |          1        1.96       82.35
+       12.9 |          1        1.96       84.31
+         13 |          1        1.96       86.27
+       13.5 |          1        1.96       88.24
+       13.7 |          1        1.96       90.20
+       14.1 |          1        1.96       92.16
+       14.8 |          2        3.92       96.08
+       15.5 |          1        1.96       98.04
+       16.3 |          1        1.96      100.00
+------------+-----------------------------------
+      Total |         51      100.00
+
+. tabstat food_insecure obeseadults2 mincome, s(mean, med, sd, range)
+
+   Stats |  food_i~e  obesea~2   mincome
+---------+------------------------------
+    Mean |  10.50196    33.408  64423.39
+     p50 |      10.5      33.9     62629
+      SD |  2.308462  4.077406  10361.31
+   Range |      10.8      15.9     43564
+----------------------------------------
+
+. 
+. browse statename mincome
+
+. 
+. codebook mincome
+
+---------------------------------------------------------------------------
+mincome                                       Median household income, 2018
+---------------------------------------------------------------------------
+
+                  Type: Numeric (long)
+
+                 Range: [42781,86345]                 Units: 1
+         Unique values: 51                        Missing .: 0/51
+
+                  Mean: 64423.4
+             Std. dev.: 10361.3
+
+           Percentiles:     10%       25%       50%       75%       90%
+                          50573     57444     62629     70489     79726
+
+. gen incomelvl=0
+
+. replace incomelvl=1 if mincome <60000
+(19 real changes made)
+
+. replace incomelvl=2 if mincome >=60000
+(32 real changes made)
+
+. replace incomelvl=3 if mincome >70000
+(15 real changes made)
+
+. replace incomelvl=. if mincome==. 
+(0 real changes made)
+
+. 
+. browse statename mincome incomelvl
+
+. 
+. tab1 incomelvl
+
+-> tabulation of incomelvl  
+
+  incomelvl |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         19       37.25       37.25
+          2 |         17       33.33       70.59
+          3 |         15       29.41      100.00
+------------+-----------------------------------
+      Total |         51      100.00
+
+. 
+. browse statename obeseadults2
+
+. gen obesitylvl=0
+
+. replace obesitylvl=1 if obeseadults2 <31.5
+(16 real changes made)
+
+. replace obesitylvl=2 if obeseadults2 >=31.5
+(35 real changes made)
+
+. replace obesitylvl=3 if obeseadults2 >35.5
+(17 real changes made)
+
+. replace obesitylvl=. if obeseadults2==.
+(1 real change made, 1 to missing)
+
+. 
+. tab1 obesitylvl
+
+-> tabulation of obesitylvl  
+
+ obesitylvl |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         16       32.00       32.00
+          2 |         18       36.00       68.00
+          3 |         16       32.00      100.00
+------------+-----------------------------------
+      Total |         50      100.00
+
+. 
+. browse statename food_insecure
+
+. gen foodinsecure=0
+
+. replace foodinsecure=1 if food_insecure <9.5
+(16 real changes made)
+
+. replace foodinsecure=2 if food_insecure >=9.5
+(35 real changes made)
+
+. replace foodinsecure=3 if food_insecure >11
+(17 real changes made)
+
+. 
+. hist mincome
+(bin=7, start=42781, width=6223.4286)
+
+. hist obeseadults2
+(bin=7, start=24.700001, width=2.2714282)
+
+. hist food_insecure
+(bin=7, start=5.5, width=1.5428571)
+
+. 
+. tab1 foodinsecure
+
+-> tabulation of foodinsecure  
+
+foodinsecur |
+          e |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         16       31.37       31.37
+          2 |         18       35.29       66.67
+          3 |         17       33.33      100.00
+------------+-----------------------------------
+      Total |         51      100.00
+
+. 
+. tab2 obesitylvl foodinsecure, col
+
+-> tabulation of obesitylvl by foodinsecure  
+
++-------------------+
+| Key               |
+|-------------------|
+|     frequency     |
+| column percentage |
++-------------------+
+
+           |           foodinsecure
+obesitylvl |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |         8          6          2 |        16 
+           |     50.00      35.29      11.76 |     32.00 
+-----------+---------------------------------+----------
+         2 |         6          8          4 |        18 
+           |     37.50      47.06      23.53 |     36.00 
+-----------+---------------------------------+----------
+         3 |         2          3         11 |        16 
+           |     12.50      17.65      64.71 |     32.00 
+-----------+---------------------------------+----------
+     Total |        16         17         17 |        50 
+           |    100.00     100.00     100.00 |    100.00 
+
+. 
+. tab2 obesitylvl incomelvl, col
+
+-> tabulation of obesitylvl by incomelvl  
+
++-------------------+
+| Key               |
+|-------------------|
+|     frequency     |
+| column percentage |
++-------------------+
+
+           |            incomelvl
+obesitylvl |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |         4          5          7 |        16 
+           |     21.05      29.41      50.00 |     32.00 
+-----------+---------------------------------+----------
+         2 |         9          4          5 |        18 
+           |     47.37      23.53      35.71 |     36.00 
+-----------+---------------------------------+----------
+         3 |         6          8          2 |        16 
+           |     31.58      47.06      14.29 |     32.00 
+-----------+---------------------------------+----------
+     Total |        19         17         14 |        50 
+           |    100.00     100.00     100.00 |    100.00 
+
+. 
+. tab2 foodinsecure incomelvl, col
+
+-> tabulation of foodinsecure by incomelvl  
+
++-------------------+
+| Key               |
+|-------------------|
+|     frequency     |
+| column percentage |
++-------------------+
+
+foodinsecu |            incomelvl
+        re |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |         4          5          7 |        16 
+           |     21.05      29.41      46.67 |     31.37 
+-----------+---------------------------------+----------
+         2 |         9          5          4 |        18 
+           |     47.37      29.41      26.67 |     35.29 
+-----------+---------------------------------+----------
+         3 |         6          7          4 |        17 
+           |     31.58      41.18      26.67 |     33.33 
+-----------+---------------------------------+----------
+     Total |        19         17         15 |        51 
+           |    100.00     100.00     100.00 |    100.00 
+
+. 
+. 
+. scatter obeseadults2 food_insecure
+
+. 
+. drop if obeseadults2==.
+(1 observation deleted)
+
+. 
+. gen hhinc2=mincome/1000
+
+. 
+. pwcorr hhinc2 obeseadults2, sig
+
+             |   hhinc2 obesea~2
+-------------+------------------
+      hhinc2 |   1.0000 
+             |
+             |
+obeseadults2 |  -0.2019   1.0000 
+             |   0.1597
+             |
+
+. pwcorr obeseadults2 food_insecure, sig
+
+             | obesea~2 food_i~e
+-------------+------------------
+obeseadults2 |   1.0000 
+             |
+             |
+food_insec~e |   0.4998   1.0000 
+             |   0.0002
+             |
+
+. pwcorr hhinc2 food_insecure, sig
+
+             |   hhinc2 food_i~e
+-------------+------------------
+      hhinc2 |   1.0000 
+             |
+             |
+food_insec~e |  -0.0325   1.0000 
+             |   0.8225
+             |
+
+. 
+. 
+. pwcorr hhinc2 obeseadults2 food_insecure, sig
+
+             |   hhinc2 obesea~2 food_i~e
+-------------+---------------------------
+      hhinc2 |   1.0000 
+             |
+             |
+obeseadults2 |  -0.2019   1.0000 
+             |   0.1597
+             |
+food_insec~e |  -0.0325   0.4998   1.0000 
+             |   0.8225   0.0002
+             |
+
+. 
+. browse statename mincome hhinc2
+
+. 
+. graph twoway (lfit food_insecure obeseadults2) (scatter food_insecure obe
+> seadults2)
+
+. 
+. graph twoway (lfit hhinc2 obeseadults2) (scatter hhinc2 obeseadults2)
+
+. 
+. graph twoway (lfit mincome food_insecure) (scatter mincome food_insecure)
+>  
+
+. 
+. ssc install asdoc
+checking asdoc consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. asdoc obeseadults2 hhinc2, replace
