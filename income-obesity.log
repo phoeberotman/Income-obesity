@@ -1,0 +1,312 @@
+---------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/phoeberotman/Desktop/statehealth23_foodinsecurity.log
+  log type:  text
+ opened on:   6 Nov 2024, 20:50:31
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. drop if obeseadults2==.
+(1 observation deleted)
+
+. drop if mincome==.
+(0 observations deleted)
+
+. drop if food_insecure==.
+(0 observations deleted)
+
+. 
+. tabstat food_insecure obeseadults2 mincome, s(mean, med, sd, range)
+
+   Stats |  food_i~e  obesea~2   mincome
+---------+------------------------------
+    Mean |      10.5    33.408  63996.86
+     p50 |      10.4      33.9     62456
+      SD |  2.331856  4.077406  10003.99
+   Range |      10.8      15.9     43564
+----------------------------------------
+
+. 
+. centile mincome, centile(33.33, 66.66)
+
+                                                          Binom. interp.   
+    Variable |       Obs  Percentile    Centile        [95% conf. interval]
+-------------+-------------------------------------------------------------
+     mincome |        50      33.33    59461.75        55561.53    62209.46
+             |                66.66    68714.11        63282.37    72031.03
+
+. gen incomelvl=0
+
+. replace incomelvl=1 if mincome <59461.75
+(16 real changes made)
+
+. replace incomelvl=2 if mincome >=59461.75
+(34 real changes made)
+
+. replace incomelvl=3 if mincome >68714.11
+(17 real changes made)
+
+. 
+. centile obeseadults2, centile (33.33, 66.66)
+
+                                                          Binom. interp.   
+    Variable |       Obs  Percentile    Centile        [95% conf. interval]
+-------------+-------------------------------------------------------------
+obeseadults2 |        50      33.33    31.59949        30.33386        33.5
+             |                66.66    35.19932        33.94086     36.5936
+
+. gen obesitylvl=0
+
+. replace obesitylvl=1 if obeseadults2 <31.59949 
+(16 real changes made)
+
+. replace obesitylvl=2 if obeseadults2 >=31.59949 
+(34 real changes made)
+
+. replace obesitylvl=3 if obeseadults2 >35.19932
+(17 real changes made)
+
+. 
+. centile food_insecure, centile (33.33, 66.66)
+
+                                                          Binom. interp.   
+    Variable |       Obs  Percentile    Centile        [95% conf. interval]
+-------------+-------------------------------------------------------------
+food_insec~e |        50      33.33     9.49983        8.733864    10.25781
+             |                66.66    11.39762            10.5    11.82151
+
+. gen foodinsecure=0
+
+. replace foodinsecure=1 if food_insecure <9.49983
+(16 real changes made)
+
+. replace foodinsecure=2 if food_insecure >=9.49983
+(34 real changes made)
+
+. replace foodinsecure=3 if food_insecure >11.39762
+(17 real changes made)
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. hist mincome
+(bin=7, start=42781, width=6223.4286)
+
+. hist obeseadults2
+(bin=7, start=24.700001, width=2.2714282)
+
+. hist food_insecure
+(bin=7, start=5.5, width=1.5428571)
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. tabulate obesitylvl foodinsecure, chi2 row 
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+           |           foodinsecure
+obesitylvl |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |         8          6          2 |        16 
+           |     50.00      37.50      12.50 |    100.00 
+-----------+---------------------------------+----------
+         2 |         5          8          4 |        17 
+           |     29.41      47.06      23.53 |    100.00 
+-----------+---------------------------------+----------
+         3 |         3          3         11 |        17 
+           |     17.65      17.65      64.71 |    100.00 
+-----------+---------------------------------+----------
+     Total |        16         17         17 |        50 
+           |     32.00      34.00      34.00 |    100.00 
+
+          Pearson chi2(4) =  12.4351   Pr = 0.014
+
+. tabulate obesitylvl incomelvl, chi2 row
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+           |            incomelvl
+obesitylvl |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |         3          5          8 |        16 
+           |     18.75      31.25      50.00 |    100.00 
+-----------+---------------------------------+----------
+         2 |         7          4          6 |        17 
+           |     41.18      23.53      35.29 |    100.00 
+-----------+---------------------------------+----------
+         3 |         6          8          3 |        17 
+           |     35.29      47.06      17.65 |    100.00 
+-----------+---------------------------------+----------
+     Total |        16         17         17 |        50 
+           |     32.00      34.00      34.00 |    100.00 
+
+          Pearson chi2(4) =   5.3694   Pr = 0.251
+
+. tabulate foodinsecure incomelvl, chi2 row
+
++----------------+
+| Key            |
+|----------------|
+|   frequency    |
+| row percentage |
++----------------+
+
+foodinsecu |            incomelvl
+        re |         1          2          3 |     Total
+-----------+---------------------------------+----------
+         1 |         3          5          8 |        16 
+           |     18.75      31.25      50.00 |    100.00 
+-----------+---------------------------------+----------
+         2 |         8          4          5 |        17 
+           |     47.06      23.53      29.41 |    100.00 
+-----------+---------------------------------+----------
+         3 |         5          8          4 |        17 
+           |     29.41      47.06      23.53 |    100.00 
+-----------+---------------------------------+----------
+     Total |        16         17         17 |        50 
+           |     32.00      34.00      34.00 |    100.00 
+
+          Pearson chi2(4) =   5.4127   Pr = 0.248
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. gen hhinc2=mincome/1000
+
+. pwcorr hhinc2 obeseadults2 food_insecure, sig
+
+             |   hhinc2 obesea~2 food_i~e
+-------------+---------------------------
+      hhinc2 |   1.0000 
+             |
+             |
+obeseadults2 |  -0.2019   1.0000 
+             |   0.1597
+             |
+food_insec~e |  -0.0325   0.4998   1.0000 
+             |   0.8225   0.0002
+             |
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. graph twoway (lfit food_insecure obeseadults2) (scatter food_insecure obeseadul
+> ts2)
+
+. graph twoway (lfit hhinc2 obeseadults2) (scatter hhinc2 obeseadults2)
+
+. graph twoway (lfit mincome food_insecure) (scatter mincome food_insecure) 
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. regress obeseadults2 hhinc2
+
+      Source |       SS           df       MS      Number of obs   =        50
+-------------+----------------------------------   F(1, 48)        =      2.04
+       Model |  33.2077687         1  33.2077687   Prob > F        =    0.1597
+    Residual |  781.429002        48  16.2797709   R-squared       =    0.0408
+-------------+----------------------------------   Adj R-squared   =    0.0208
+       Total |  814.636771        49  16.6252402   Root MSE        =    4.0348
+
+------------------------------------------------------------------------------
+obeseadults2 | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      hhinc2 |  -.0822903   .0576173    -1.43   0.160    -.1981375     .033557
+       _cons |   38.67432   3.731214    10.37   0.000     31.17221    46.17643
+------------------------------------------------------------------------------
+
+. esttab, style(fixed) 
+
+----------------------------
+                      (1)   
+             obeseadults2   
+----------------------------
+hhinc2            -0.0823   
+                  (-1.43)   
+
+_cons               38.67***
+                  (10.37)   
+----------------------------
+N                      50   
+----------------------------
+t statistics in parentheses
+* p<0.05, ** p<0.01, *** p<0.001
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. regress obeseadults2 hhinc2 food_insecure
+
+      Source |       SS           df       MS      Number of obs   =        50
+-------------+----------------------------------   F(2, 47)        =      9.33
+       Model |  231.580785         2  115.790392   Prob > F        =    0.0004
+    Residual |  583.055986        47  12.4054465   R-squared       =    0.2843
+-------------+----------------------------------   Adj R-squared   =    0.2538
+       Total |  814.636771        49  16.6252402   Root MSE        =    3.5221
+
+-------------------------------------------------------------------------------
+ obeseadults2 | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+       hhinc2 |  -.0757425   .0503228    -1.51   0.139    -.1769789    .0254939
+food_insecure |   .8633196    .215892     4.00   0.000      .429001    1.297638
+        _cons |   29.19043   4.029082     7.24   0.000     21.08496     37.2959
+-------------------------------------------------------------------------------
+
+. esttab, style(fixed) 
+
+----------------------------
+                      (1)   
+             obeseadults2   
+----------------------------
+hhinc2            -0.0757   
+                  (-1.51)   
+
+food_insec~e        0.863***
+                   (4.00)   
+
+_cons               29.19***
+                   (7.24)   
+----------------------------
+N                      50   
+----------------------------
+t statistics in parentheses
+* p<0.05, ** p<0.01, *** p<0.001
+
+. 
+end of do-file
+
+. do "/var/folders/kd/pmn9s3zn1n59f3jnm0hg76rh0000gn/T//SD19207.000000"
+
+. log close
+      name:  <unnamed>
+       log:  /Users/phoeberotman/Desktop/statehealth23_foodinsecurity.log
+  log type:  text
+ closed on:   6 Nov 2024, 20:51:15
+---------------------------------------------------------------------------------
