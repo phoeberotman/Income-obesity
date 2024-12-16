@@ -1,1 +1,1 @@
-[Download PDF](https://raw.githubusercontent.com/phoeberotman/Income-obesity/main/assets/Conclusion.docx)
+[Download](https://raw.githubusercontent.com/phoeberotman/Income-obesity/main/assets/Conclusion.docx)
